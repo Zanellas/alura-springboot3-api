@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.dto.DoctorDTO;
 import med.voll.api.dto.DoctorShortDTO;
+import med.voll.api.dto.DoctorUpdateDTO;
 import med.voll.api.model.Doctor;
 import med.voll.api.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,13 @@ public class DoctorController {
     public Page<DoctorShortDTO> listAllShort(@PageableDefault(size = 5) Pageable pageable) {
         return doctorRepository.findAll(pageable)
                 .map(DoctorShortDTO::new);
+    }
+
+    @PutMapping
+    @Transactional
+    public void update(@RequestBody @Valid DoctorUpdateDTO doctorDTO) {
+        var doctor = doctorRepository.getReferenceById(doctorDTO.id());
+        doctor.updateInfo(doctorDTO);
     }
 
 }

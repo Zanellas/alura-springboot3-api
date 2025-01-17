@@ -31,4 +31,7 @@ public class Address {
         this.number = addressDTO.number();
 
     }
+
+    public void updateAddress(AddressDTO address) {
+    }
 }
